@@ -15,6 +15,7 @@ class Printer {
 			case RankDir(rd): 'rankdir="${printRankdir(rd)}"';
 			case DPI(f): 'dpi=$f';
 			case Splines(var spline): 'splines=${printSpline(spline)}';
+			case Constraint(b): 'constraint=${b ? "true" : "false"}';
 			case _: throw 'Unsupported attribute: $attr';
 		};
 	}
