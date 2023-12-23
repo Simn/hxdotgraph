@@ -3,10 +3,10 @@ package dot;
 import dot.Attribute;
 
 class Printer {
-	
 	static public function printAttribute(attr:Attribute) {
-		return switch(attr) {
+		return switch (attr) {
 			case FillColor(c): 'fillcolor=${printColor(c)}';
+			case Color(cl): 'color=${cl.map(printColor).join(":")}';
 			case FontName(s): 'fontname="$s"';
 			case Label(s): 'label="$s"';
 			case Shape(sh): 'shape=${printShape(sh)}';
@@ -14,6 +14,7 @@ class Printer {
 			case Href(s): 'href="$s"';
 			case RankDir(rd): 'rankdir="${printRankdir(rd)}"';
 			case DPI(f): 'dpi=$f';
+			case Splines(var spline): 'splines=${printSpline(spline)}';
 			case _: throw 'Unsupported attribute: $attr';
 		};
 	}
@@ -26,8 +27,19 @@ class Printer {
 		}
 	}
 
+	static public function printSpline(spline:Spline) {
+		return switch (spline) {
+			case None: "none";
+			case Line: "line";
+			case Polyline: "polyline";
+			case Curved: "curved";
+			case Ortho: "ortho";
+			case Spline: "spline";
+		}
+	}
+
 	static public function printColor(c:Color) {
-		return switch(c) {
+		return switch (c) {
 			case Aliceblue: "aliceblue";
 			case Antiquewhite: "antiquewhite";
 			case Antiquewhite1: "antiquewhite1";
@@ -694,9 +706,9 @@ class Printer {
 			case Rl: "RL";
 		}
 	}
-	
+
 	static public function printShape(sh:Shape) {
-		return switch(sh) {
+		return switch (sh) {
 			case Box: "box";
 			case Polygon: "polygon";
 			case Ellipse: "ellipse";
@@ -758,7 +770,7 @@ class Printer {
 	}
 
 	static public function printStyle(st:Style) {
-		return switch(st) {
+		return switch (st) {
 			case Dashed: "dashed";
 			case Dotted: "dotted";
 			case Solid: "solid";

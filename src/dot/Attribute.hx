@@ -1,186 +1,5 @@
 package dot;
 
-enum ArrowType {
-	Normal;
-	Dot;
-	ODot;
-	None;
-	Empty;
-	Diamond;
-	EDiamond;
-	Box;
-	Open;
-	Vee;
-	Inv;
-	InvDot;
-	InvODot;
-	Tee;
-	InvEmpty;
-	ODiamond;
-	Crow;
-	OBox;
-	HalfOpen;
-	Circle;
-}
-
-enum ClusterMode {
-	Local;
-	Global;
-	None;
-}
-
-enum CompassPoint {
-	N;
-	NE;
-	E;
-	SE;
-	S;
-	SW;
-	W;
-	NW;
-	C;
-	_;
-}
-
-enum DirType {
-	Forward;
-	Back;
-	Both;
-	None;
-}
-
-enum ImageScale {
-	False;
-	True;
-	Width;
-	Height;
-	Both;
-}
-
-enum OutputMode {
-	BreadhFirst;
-	NodesFirst;
-	EdgesFirst;
-}
-
-enum PackMode {
-	Node;
-	Clust;
-	Graph;
-	// TODO
-}
-
-typedef Point = {
-	x: Float,
-	y: Float
-}
-
-enum RankDir {
-	Tb;
-	Lr;
-	Bt;
-	Rl;
-}
-
-enum RankType {
-	Same;
-	Min;
-	Source;
-	Max;
-	Sink;
-}
-
-typedef Rectangle = {
-	llx: Float,
-	lly: Float,
-	urx: Float,
-	ury: Float
-}
-
-enum Shape {
-	Box;
-	Polygon;
-	Ellipse;
-	Oval;
-	Circle;
-	Point;
-	Egg;
-	Triangle;
-	Plaintext;
-	Diamond;
-	Trapezium;
-	Parallelogram;
-	House;
-	Pentagon;
-	Hexagon;
-	Septagon;
-	Octagon;
-	Doublecircle;
-	Doubleoctagon;
-	Tripleoctagon;
-	Invtriangle;
-	Invtrapezium;
-	Invhouse;
-	Mdiamond;
-	Msquare;
-	Mcircle;
-	Rect;
-	Rectangle;
-	Square;
-	Star;
-	None;
-	Underline;
-	Note;
-	Tab;
-	Folder;
-	Box3d;
-	Component;
-	Promoter;
-	Cds;
-	Terminator;
-	Utr;
-	Primersite;
-	Restrictionsite;
-	Fivepoverhang;
-	Threepoverhang;
-	Noverhang;
-	Assembly;
-	Signature;
-	Insulator;
-	Ribosite;
-	Rnastab;
-	Proteasesite;
-	Proteinstab;
-	Rpromoter;
-	Rarrow;
-	Larrow;
-	Lpromoter;
-}
-
-enum SmoothType {
-	None;
-	Avg_dist;
-	Graph_dist;
-	Power_dist;
-	Rng;
-	Spring;
-	Triangle;
-}
-
-enum Style {
-	Dashed;
-	Dotted;
-	Solid;
-	Invis;
-	Bold;
-	Tapered;
-	Filled;
-	Striped;
-	Wedged;
-	Diagonals;
-	Rounded;
-}
-
 enum Attribute {
 	Area(f:Float);
 	ArrowHead(at:ArrowType);
@@ -321,7 +140,7 @@ enum Attribute {
 	Skew(f:Float);
 	Smoothing(st:SmoothType);
 	Sortv(i:Int);
-	Splines; // TODO
+	Splines(spline:Spline);
 	Start; // TODO
 	Style(st:Style);
 	Stylesheet(s:String);
@@ -345,4 +164,194 @@ enum Attribute {
 	XLabel(s:String);
 	XLp(p:Point);
 	Z(f:Float);
+}
+
+enum ArrowType {
+	Normal;
+	Dot;
+	ODot;
+	None;
+	Empty;
+	Diamond;
+	EDiamond;
+	Box;
+	Open;
+	Vee;
+	Inv;
+	InvDot;
+	InvODot;
+	Tee;
+	InvEmpty;
+	ODiamond;
+	Crow;
+	OBox;
+	HalfOpen;
+	Circle;
+}
+
+enum ClusterMode {
+	Local;
+	Global;
+	None;
+}
+
+enum CompassPoint {
+	N;
+	NE;
+	E;
+	SE;
+	S;
+	SW;
+	W;
+	NW;
+	C;
+	_;
+}
+
+enum DirType {
+	Forward;
+	Back;
+	Both;
+	None;
+}
+
+enum ImageScale {
+	False;
+	True;
+	Width;
+	Height;
+	Both;
+}
+
+enum OutputMode {
+	BreadhFirst;
+	NodesFirst;
+	EdgesFirst;
+}
+
+enum PackMode {
+	Node;
+	Clust;
+	Graph;
+	// TODO
+}
+
+typedef Point = {
+	x:Float,
+	y:Float
+}
+
+enum RankDir {
+	Tb;
+	Lr;
+	Bt;
+	Rl;
+}
+
+enum RankType {
+	Same;
+	Min;
+	Source;
+	Max;
+	Sink;
+}
+
+typedef Rectangle = {
+	llx:Float,
+	lly:Float,
+	urx:Float,
+	ury:Float
+}
+
+enum Shape {
+	Box;
+	Polygon;
+	Ellipse;
+	Oval;
+	Circle;
+	Point;
+	Egg;
+	Triangle;
+	Plaintext;
+	Diamond;
+	Trapezium;
+	Parallelogram;
+	House;
+	Pentagon;
+	Hexagon;
+	Septagon;
+	Octagon;
+	Doublecircle;
+	Doubleoctagon;
+	Tripleoctagon;
+	Invtriangle;
+	Invtrapezium;
+	Invhouse;
+	Mdiamond;
+	Msquare;
+	Mcircle;
+	Rect;
+	Rectangle;
+	Square;
+	Star;
+	None;
+	Underline;
+	Note;
+	Tab;
+	Folder;
+	Box3d;
+	Component;
+	Promoter;
+	Cds;
+	Terminator;
+	Utr;
+	Primersite;
+	Restrictionsite;
+	Fivepoverhang;
+	Threepoverhang;
+	Noverhang;
+	Assembly;
+	Signature;
+	Insulator;
+	Ribosite;
+	Rnastab;
+	Proteasesite;
+	Proteinstab;
+	Rpromoter;
+	Rarrow;
+	Larrow;
+	Lpromoter;
+}
+
+enum SmoothType {
+	None;
+	Avg_dist;
+	Graph_dist;
+	Power_dist;
+	Rng;
+	Spring;
+	Triangle;
+}
+
+enum Style {
+	Dashed;
+	Dotted;
+	Solid;
+	Invis;
+	Bold;
+	Tapered;
+	Filled;
+	Striped;
+	Wedged;
+	Diagonals;
+	Rounded;
+}
+
+enum Spline {
+	None;
+	Line;
+	Polyline;
+	Curved;
+	Ortho;
+	Spline;
 }

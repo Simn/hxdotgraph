@@ -1,0 +1,10 @@
+{
+    "name": "hxdotgraph",
+    "url": "https://github.com/Simn/hxdotgraph",
+    "description": "For dot graphs",
+    "license": "MIT",
+    "version": "1.0.0",
+    "releasenote": "Initial.",
+    "classPath": "src",
+    "contributors": ["Simn"]
+}

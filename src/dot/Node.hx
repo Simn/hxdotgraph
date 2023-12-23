@@ -1,22 +1,32 @@
 package dot;
 
-class Node {
+class Node implements DotPrinter {
 	public var name:String;
 	public var attrs:Array<Attribute>;
-	var graph:Graph;
 
-	@:allow(dot.Graph)
-	function new(graph:Graph, name:String, attrs:Array<Attribute>) {
-		this.graph = graph;
+	var host:NodeHost;
+
+	@:allow(dot.Graph, dot.NodeHost)
+	function new(host:NodeHost, name:String, attrs:Array<Attribute>) {
+		this.host = host;
 		this.name = name;
 		this.attrs = attrs;
 	}
 
 	public function connect(to:Node, attrs:Array<Attribute>) {
-		graph.edge(this, to, attrs);
+		host.edge(this, to, attrs);
 	}
-	
+
 	public function clone() {
-		return graph.node(attrs.copy());
+		return host.node(attrs.copy());
+	}
+
+	public function getDotCode(indentation:String, isDigraph:Bool):String {
+		var buffer = new StringBuf();
+		buffer.add(indentation);
+		buffer.add(name);
+		buffer.add(Printer.printAttributes(attrs));
+		buffer.add(";\n");
+		return buffer.toString();
 	}
 }
