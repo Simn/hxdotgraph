@@ -1,6 +1,12 @@
 --cwd examples
-
 -cp ../src
 
+--each
+
 --main Factorio
+--interp
+
+--next
+
+--main Ast
 --interp
