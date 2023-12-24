@@ -1,5 +1,6 @@
 package dot;
 
+import dot.Attribute;
 import dot.*;
 
 abstract class NodeHost {
@@ -12,23 +13,23 @@ abstract class NodeHost {
 		this.prefix = prefix;
 	}
 
-	public function global(attrs:Array<Attribute>) {
+	public function global(attrs:Array<Attribute<NodeAttribute>>) {
 		nodes.push(new Node(this, "node", attrs));
 	}
 
-	public function node(attrs:Array<Attribute>) {
+	public function node(attrs:Array<Attribute<NodeAttribute>>) {
 		var node = new Node(this, prefix + "_" + nodes.length, attrs);
 		nodes.push(node);
 		return node;
 	}
 
-	public function edge(from:Node, to:Node, attrs:Array<Attribute> = null) {
+	public function edge(from:Node, to:Node, attrs:Array<Attribute<EdgeAttribute>> = null) {
 		var edge = new Edge(this, from, to, attrs ?? []);
 		edges.push(edge);
 		return edge;
 	}
 
-	public function subgraph(attrs:Array<Attribute>) {
+	public function subgraph(attrs:Array<Attribute<ClusterAttribute>>) {
 		var subgraph = new Subgraph(this, "cluster_" + subgraphs.length, attrs);
 		subgraphs.push(subgraph);
 		return subgraph;

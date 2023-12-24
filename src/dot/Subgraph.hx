@@ -1,15 +1,17 @@
 package dot;
 
+import dot.Attribute;
+
 using StringTools;
 
 class Subgraph extends NodeHost implements DotPrinter {
 	public var name:String;
-	public var attrs:Array<Attribute>;
+	public var attrs:Array<Attribute<ClusterAttribute>>;
 
 	var host:NodeHost;
 
 	@:allow(dot.NodeHost)
-	function new(host:NodeHost, name:String, attrs:Array<Attribute>) {
+	function new(host:NodeHost, name:String, attrs:Array<Attribute<ClusterAttribute>>) {
 		super(name.replace(" ", "_"));
 		this.host = host;
 		this.name = name;

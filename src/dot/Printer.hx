@@ -11,7 +11,7 @@ class Printer {
 		}
 	}
 
-	static public function printAttribute(attr:Attribute) {
+	static public function printAttribute<T>(attr:Attribute<T>) {
 		return switch (attr) {
 			case Area(f): 'area=$f';
 			case ArrowHead(at): 'arrowhead=${printArrowType(at)}';
@@ -99,12 +99,12 @@ class Printer {
 			case Margin(dop): 'margin=${printDoubleOrPoint(dop)}';
 			case MaxIter(i): 'maxiter=$i';
 			case McLimit(f): 'mclimit=$f';
-			case MInDist(f): 'mindist=$f';
+			case MinDist(f): 'mindist=$f';
 			case MinLen(i): 'minlen=$i';
 			case Mode(s): 'mode="$s"';
 			case Model(s): 'model="$s"';
-			case Mosek(b): 'mosek=$b';
-			case NoDesep(f): 'nodesep=$f';
+			case Newrank(b): 'newrank=$b';
+			case NodeSep(f): 'nodesep=$f';
 			case NoJustify(b): 'nojustify=$b';
 			case Normalize(f): 'normalize=$f';
 			case NsLimit(f): 'nslimit=$f';
@@ -179,7 +179,7 @@ class Printer {
 		};
 	}
 
-	static public function printAttributes(attrs:Array<Attribute>) {
+	static public function printAttributes<T>(attrs:Array<Attribute<T>>) {
 		if (attrs.length > 0) {
 			return "[" + attrs.map(printAttribute).join(", ") + "]";
 		} else {

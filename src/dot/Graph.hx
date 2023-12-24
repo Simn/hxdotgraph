@@ -3,10 +3,10 @@ package dot;
 import dot.Attribute;
 
 class Graph extends NodeHost {
-	var attrs:Array<Attribute>;
+	var attrs:Array<Attribute<GraphAttribute>>;
 	var isDigraph:Bool;
 
-	public function new(attrs:Array<Attribute>, isDigraph = true) {
+	public function new(attrs:Array<Attribute<GraphAttribute>>, isDigraph = true) {
 		super("n");
 		this.attrs = attrs;
 		this.isDigraph = isDigraph;

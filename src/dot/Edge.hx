@@ -1,14 +1,16 @@
 package dot;
 
+import dot.Attribute;
+
 class Edge implements DotPrinter {
 	public var from:Node;
 	public var to:Node;
-	public var attrs:Array<Attribute>;
+	public var attrs:Array<Attribute<EdgeAttribute>>;
 
 	var host:NodeHost;
 
 	@:allow(dot.NodeHost)
-	function new(host:NodeHost, from:Node, to:Node, attrs:Array<Attribute> = null) {
+	function new(host:NodeHost, from:Node, to:Node, attrs:Array<Attribute<EdgeAttribute>> = null) {
 		this.host = host;
 		this.from = from;
 		this.to = to;
