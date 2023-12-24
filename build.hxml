@@ -4,9 +4,14 @@
 --each
 
 --main Factorio
+-D dump-dependencies
 --interp
 
 --next
 
 --main Ast
+--interp
+
+--next
+--main Dependencies
 --interp

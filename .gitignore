@@ -1,3 +1,5 @@
 ﻿.vscode/
 examples/factorio.dot
 examples/ast.dot
+examples/dump
+examples/dependencies.dot
