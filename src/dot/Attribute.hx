@@ -21,7 +21,7 @@ enum Attribute {
 	Dim(i:Int);
 	Dimen(i:Int);
 	Dir(dt:DirType);
-	DirEdgeConstraints; // TODO
+	DirEdgeConstraints(s:String);
 	Distortion(f:Float);
 	DPI(f:Float);
 	EdgeUrl(s:String);
@@ -29,7 +29,7 @@ enum Attribute {
 	EdgeTarget(s:String);
 	EdgeTooltip(s:String);
 	Epsilon(f:Float);
-	ESep(?f:Float, p:Point);
+	ESep(dop:DoubleOrPoint, add:Bool);
 	FillColor(c:Color);
 	FixedSize(b:Bool);
 	FontColor(c:Color);
@@ -41,11 +41,11 @@ enum Attribute {
 	GradientAngle(i:Int);
 	Group(s:String);
 	HeadUrl(s:String);
-	Head_lp(p:Point);
+	HeadLp(p:Point);
 	HeadClip(b:Bool);
 	HeadHref(s:String);
 	HeadLabel(s:String);
-	HeadPort(s:String, ?cp:CompassPoint);
+	HeadPort(pp:PortPos);
 	HeadTarget(s:String);
 	HeadTooltip(s:String);
 	Height(f:Float);
@@ -53,7 +53,7 @@ enum Attribute {
 	Id(s:String);
 	Image(s:String);
 	ImagePath(s:String);
-	ImageScale(is:ImageScale);
+	ImageScale(ims:ImageScale);
 	InputScale(f:Float);
 	Label(s:String);
 	LabelUrl(s:String);
@@ -70,10 +70,10 @@ enum Attribute {
 	LabelTarget(s:String);
 	LabelTooltip(s:String);
 	Landscape(b:Bool);
-	Layer; // TODO
+	Layer(s:String);
 	LayerListSep(s:String);
-	Layers; // TODO
-	LayerSelect; // TODO
+	Layers(s:String);
+	LayerSelect(s:String);
 	LayerSep(s:String);
 	Layout(s:String);
 	Len(f:Float);
@@ -84,7 +84,7 @@ enum Attribute {
 	Lp(p:Point);
 	LTail(s:String);
 	LWidth(f:Float);
-	Margin; // TODO
+	Margin(dop:DoubleOrPoint);
 	MaxIter(i:Int);
 	McLimit(f:Float);
 	MInDist(f:Float);
@@ -97,73 +97,83 @@ enum Attribute {
 	Normalize(f:Float);
 	NsLimit(f:Float);
 	Ordering(s:String);
-	Orientation(s:String);
+	Orientation(dos:DoubleOrString);
 	OutputOrder(om:OutputMode);
-	Overlap; // TODO
-	Overlap_Scaling(f:Float);
-	Overlap_Shrink(b:Bool);
-	Pack; // TODO
+	Overlap(s:String);
+	OverlapScaling(f:Float);
+	OverlapShrink(b:Bool);
+	Pack(boi:BoolOrInt);
 	Packmode(pm:PackMode);
-	Pad; // TODO
-	Page; // TODO
-	PageDir; // TODO
+	Pad(dop:DoubleOrPoint);
+	Page(dop:DoubleOrPoint);
+	PageDir(pdir:PageDir);
 	PenColor(c:Color);
 	PenWidth(f:Float);
 	Peripheries(i:Int);
 	Pin(b:Bool);
-	Pos; // TODO
-	Quadtree; // TODO
+	Pos(post:PointOrSplineType);
+	Quadtree(boq:BoolOrQuadType);
 	Quantum(f:Float);
 	Rank(rt:RankType);
 	RankDir(rd:RankDir);
 	RankSep(fl:Array<Float>);
-	Ratio; // TODO
+	Ratio(dos:DoubleOrString);
 	Rects(rect:Rectangle);
 	Regular(b:Bool);
 	Remincross(b:Bool);
 	RepulsiveForce(f:Float);
 	Resolution(f:Float);
-	Root; // TODO
+	Root(s:String);
 	Rotate(i:Int);
 	Rotation(f:Float);
 	SameHead(s:String);
 	SameTail(s:String);
 	SamplePoint(o:Int);
-	Scale; // TODO
+	Scale(dop:DoubleOrPoint);
 	SearchSize(i:Int);
-	Sep; // TODO
+	Sep(dop:DoubleOrPoint, add:Bool);
 	Shape(sh:Shape);
 	Shapefile(s:String);
 	Showboxes(i:Int);
 	Sides(i:Int);
-	Size; // TODO
+	Size(dop:DoubleOrPoint);
 	Skew(f:Float);
 	Smoothing(st:SmoothType);
 	Sortv(i:Int);
 	Splines(spline:Spline);
-	Start; // TODO
+	Start(s:String);
 	Style(st:Style);
 	Stylesheet(s:String);
 	TailUrl(s:String);
-	Tail_lp(p:Point);
+	TailLp(p:Point);
 	TailClip(b:Bool);
 	TailHref(s:String);
 	TailLabel(s:String);
-	TailPort; // TODO
+	TailPort(pp:PortPos);
 	TailTarget(s:String);
 	TailTooltip(s:String);
 	Target(s:String);
 	Tooltip(s:String);
 	Truecolor(b:Bool);
 	Vertices(pl:Array<Point>);
-	Viewport; // TODO
-	Voro_margin(f:Float);
+	Viewport(s:String);
+	VoroMargin(f:Float);
 	Weight(f:Float);
 	Width(f:Float);
 	XDotVersion(s:String);
 	XLabel(s:String);
 	XLp(p:Point);
 	Z(f:Float);
+}
+
+typedef AddDouble = {
+	var f:Float;
+	var add:Bool;
+}
+
+typedef AddPoint = {
+	var point:Point;
+	var add:Bool;
 }
 
 enum ArrowType {
@@ -187,6 +197,16 @@ enum ArrowType {
 	OBox;
 	HalfOpen;
 	Circle;
+}
+
+enum BoolOrInt {
+	Bool(b:Bool);
+	Int(i:Int);
+}
+
+enum BoolOrQuadType {
+	Bool(b:Bool);
+	QuadType(qt:QuadType);
 }
 
 enum ClusterMode {
@@ -215,6 +235,16 @@ enum DirType {
 	None;
 }
 
+enum DoubleOrPoint {
+	Double(f:Float);
+	Point(p:Point);
+}
+
+enum DoubleOrString {
+	Double(f:Float);
+	String(s:String);
+}
+
 enum ImageScale {
 	False;
 	True;
@@ -224,7 +254,7 @@ enum ImageScale {
 }
 
 enum OutputMode {
-	BreadhFirst;
+	BreadthFirst;
 	NodesFirst;
 	EdgesFirst;
 }
@@ -233,12 +263,42 @@ enum PackMode {
 	Node;
 	Clust;
 	Graph;
-	// TODO
+	Array(flags:String, ?n:Int);
+}
+
+enum PageDir {
+	BL;
+	BR;
+	TL;
+	TR;
+	RB;
+	RT;
+	LB;
+	LT;
 }
 
 typedef Point = {
-	x:Float,
-	y:Float
+	var x:Float;
+	var y:Float;
+	var ?z:Float;
+	var ?dontChange:Bool;
+}
+
+enum PointOrSplineType {
+	Point(p:Point);
+	SplineType(s:String); // I have no idea
+}
+
+enum PortPos {
+	CompassPoint(cp:CompassPoint);
+	PortName(s:String);
+	Both(s:String, cp:CompassPoint);
+}
+
+enum QuadType {
+	Normal;
+	Fast;
+	None;
 }
 
 enum RankDir {
@@ -325,9 +385,9 @@ enum Shape {
 
 enum SmoothType {
 	None;
-	Avg_dist;
-	Graph_dist;
-	Power_dist;
+	AvgDist;
+	GraphDist;
+	PowerDist;
 	Rng;
 	Spring;
 	Triangle;

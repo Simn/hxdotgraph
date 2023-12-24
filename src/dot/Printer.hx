@@ -3,20 +3,179 @@ package dot;
 import dot.Attribute;
 
 class Printer {
+	static function printBoolString(s:String) {
+		return switch (s) {
+			case "true": 'true';
+			case "false": 'false';
+			case _: '"$s"';
+		}
+	}
+
 	static public function printAttribute(attr:Attribute) {
 		return switch (attr) {
-			case FillColor(c): 'fillcolor=${printColor(c)}';
+			case Area(f): 'area=$f';
+			case ArrowHead(at): 'arrowhead=${printArrowType(at)}';
+			case ArrowSize(f): 'arrowsize=$f';
+			case ArrowTail(at): 'arrowtail=${printArrowType(at)}';
+			case BB(rect): 'bb="${printRectangle(rect)}"';
+			case BGColor(c): 'bgcolor=${printColor(c)}';
+			case Center(b): 'center=$b';
+			case Charset(s): 'charset="$s"';
+			case ClusterRank(cm): 'clusterrank=${printClusterMode(cm)}';
 			case Color(cl): 'color=${cl.map(printColor).join(":")}';
-			case FontName(s): 'fontname="$s"';
-			case Label(s): 'label="$s"';
-			case Shape(sh): 'shape=${printShape(sh)}';
-			case Style(st): 'style=${printStyle(st)}';
-			case Href(s): 'href="$s"';
-			case RankDir(rd): 'rankdir="${printRankdir(rd)}"';
+			case ColorScheme(s): 'colorscheme="$s"';
+			case Comment(s): 'comment="$s"';
+			case Compound(b): 'compound=$b';
+			case Concentrate(b): 'concentrate=$b';
+			case Constraint(b): 'constraint=$b';
+			case Decorate(b): 'decorate=$b';
+			case DefaultDist(f): 'defaultdist=$f';
+			case Dim(i): 'dim=$i';
+			case Dimen(i): 'dimen=$i';
+			case Dir(dt): 'dir=${printDirType(dt)}';
+			case DirEdgeConstraints(s): 'diredgeconstraints=${printBoolString(s)}';
+			case Distortion(f): 'distortion=$f';
 			case DPI(f): 'dpi=$f';
+			case EdgeUrl(s): 'edgeurl="$s"';
+			case EdgeHref(s): 'edgehref="$s';
+			case EdgeTarget(s): 'edgetarget="$s"';
+			case EdgeTooltip(s): 'edgetooltip="$s"';
+			case Epsilon(f): 'epsilon=$f';
+			case ESep(dop, add): 'esep=${add ? "+" : ""}${printDoubleOrPoint(dop)}';
+			case FillColor(c): 'fillcolor=${printColor(c)}';
+			case FixedSize(b): 'fixedsize=$b';
+			case FontColor(c): 'fontcolor=${printColor(c)}';
+			case FontName(s): 'fontname="$s"';
+			case FontNames(s): 'fontnames="$s"';
+			case FontPath(s): 'fontpath="$s';
+			case FontSize(f): 'fontsize=$f';
+			case ForceLabels(b): 'forcelabels=$b';
+			case GradientAngle(i): 'gradientangle=$i';
+			case Group(s): 'group="$s"';
+			case HeadUrl(s): 'headurl="$s"';
+			case HeadLp(p): 'head_lp=${printPoint(p)}';
+			case HeadClip(b): 'headclip=$b';
+			case HeadHref(s): 'headhref="$s"';
+			case HeadLabel(s): 'headlabel="$s"';
+			case HeadPort(pp): 'headport=${printPortPos(pp)}';
+			case HeadTarget(s): 'headtarget="$s"';
+			case HeadTooltip(s): 'headtooltip="$s"';
+			case Height(f): 'height=$f';
+			case Href(s): 'href="$s"';
+			case Id(s): 'id="$s"';
+			case Image(s): 'image="$s"';
+			case ImagePath(s): 'imagepath="$s"';
+			case ImageScale(ims): 'imagescale=${printImageScale(ims)}';
+			case InputScale(f): 'inputscale=$f';
+			case Label(s): 'label="$s"';
+			case LabelUrl(s): 'labelurl="$s"';
+			case LabelScheme(i): 'labelscheme=$i';
+			case LabelAngle(f): 'labelangle=$f';
+			case LabelDistance(f): 'labeldistance=$f';
+			case LabelFloat(b): 'labelfloat=$b';
+			case LabelFontColor(c): 'labelfontcolor=${printColor(c)}';
+			case LabelFontName(s): 'labelfontname="$s"';
+			case LabelFontSize(f): 'labelfontsize=$f';
+			case LabelHref(s): 'labelhref="$s"';
+			case LabelJust(s): 'labeljust="$s"';
+			case LabelLoc(s): 'labelloc="$s"';
+			case LabelTarget(s): 'labeltarget="$s"';
+			case LabelTooltip(s): 'labeltooltip="$s"';
+			case Landscape(b): 'landscape=$b';
+			case Layer(s): 'layer="$s"';
+			case LayerListSep(s): 'layerlistsep="$s"';
+			case Layers(s): 'layers="$s"';
+			case LayerSelect(s): 'layerselect="$s"';
+			case LayerSep(s): 'layersep="$s"';
+			case Layout(s): 'layout="$s"';
+			case Len(f): 'len=$f';
+			case Levels(i): 'levels=$i';
+			case LevelsGap(f): 'levelsgap=$f';
+			case LHead(s): 'lhead="$s"';
+			case LHeight(f): 'lheight=$f';
+			case Lp(p): 'lp=${printPoint(p)}';
+			case LTail(s): 'ltail="$s"';
+			case LWidth(f): 'lwidth=$f';
+			case Margin(dop): 'margin=${printDoubleOrPoint(dop)}';
+			case MaxIter(i): 'maxiter=$i';
+			case McLimit(f): 'mclimit=$f';
+			case MInDist(f): 'mindist=$f';
+			case MinLen(i): 'minlen=$i';
+			case Mode(s): 'mode="$s"';
+			case Model(s): 'model="$s"';
+			case Mosek(b): 'mosek=$b';
+			case NoDesep(f): 'nodesep=$f';
+			case NoJustify(b): 'nojustify=$b';
+			case Normalize(f): 'normalize=$f';
+			case NsLimit(f): 'nslimit=$f';
+			case Ordering(s): 'ordering="$s"';
+			case Orientation(dos): 'orientation=${printDoubleOrString(dos)}';
+			case OutputOrder(om): 'outputorder=${printOutputMode(om)}';
+			case Overlap(s): 'overlap=${printBoolString(s)}';
+			case OverlapScaling(f): 'overlapscaling=$f';
+			case OverlapShrink(b): 'overlapshrink=$b';
+			case Pack(boi): 'pack=${printBoolOrInt(boi)}';
+			case Packmode(pm): 'packmode=${printPackMode(pm)}';
+			case Pad(dop): 'pad=${printDoubleOrPoint(dop)}';
+			case Page(dop): 'page=${printDoubleOrPoint(dop)}';
+			case PageDir(pdir): 'pagedir=${printPageDir(pdir)}';
+			case PenColor(c): 'pencolor=${printColor(c)}';
+			case PenWidth(f): 'penwidth=$f';
+			case Peripheries(i): 'peripheries=$i';
+			case Pin(b): 'pin=$b';
+			case Pos(post): 'pos=${printPointOrSplineType(post)}';
+			case Quadtree(boq): 'quadtree=${printBoolOrQuadType(boq)}';
+			case Quantum(f): 'quantum=$f';
+			case Rank(rt): 'rank=${printRankType(rt)}';
+			case RankDir(rd): 'rankdir="${printRankDir(rd)}"';
+			case RankSep(fl): 'ranksep=${printDoubleList(fl)}';
+			case Ratio(dos): 'ratio=${printDoubleOrString(dos)}';
+			case Rects(rect): 'rects=${printRectangle(rect)}';
+			case Regular(b): 'regular=$b';
+			case Remincross(b): 'remincross=$b';
+			case RepulsiveForce(f): 'repulsiveforce=$f';
+			case Resolution(f): 'resolution=$f';
+			case Root(s): 'root=${printBoolString(s)}';
+			case Rotate(i): 'rotate=$i';
+			case Rotation(f): 'rotation=$f';
+			case SameHead(s): 'samehead="$s"';
+			case SameTail(s): 'sametail="$s"';
+			case SamplePoint(o): 'samplepoint=$o';
+			case Scale(dop): 'scale=${printDoubleOrPoint(dop)}';
+			case SearchSize(i): 'searchsize=$i';
+			case Sep(dop, add): 'sep=${add ? "+" : ""}${printDoubleOrPoint(dop)}';
+			case Shape(sh): 'shape=${printShape(sh)}';
+			case Shapefile(s): 'shapefile="$s"';
+			case Showboxes(i): 'showboxes=$i';
+			case Sides(i): 'sides=$i';
+			case Size(dop): 'size=${printDoubleOrPoint(dop)}';
+			case Skew(f): 'skew=$f';
+			case Smoothing(st): 'smoothing=${printSmoothType(st)}';
+			case Sortv(i): 'sortv=$i';
 			case Splines(var spline): 'splines=${printSpline(spline)}';
-			case Constraint(b): 'constraint=${b ? "true" : "false"}';
-			case _: throw 'Unsupported attribute: $attr';
+			case Start(s): 'start="$s"';
+			case Style(st): 'style=${printStyle(st)}';
+			case Stylesheet(s): 'stylesheet="$s"';
+			case TailUrl(s): 'tailurl="$s"';
+			case TailLp(p): 'tail_lp=${printPoint(p)}';
+			case TailClip(b): 'tailclip=$b';
+			case TailHref(s): 'tailhref="$s"';
+			case TailLabel(s): 'taillabel="$s"';
+			case TailPort(pp): 'tailport=${printPortPos(pp)}';
+			case TailTarget(s): 'tailtarget="$s"';
+			case TailTooltip(s): 'tailtooltip="$s"';
+			case Target(s): 'target="$s"';
+			case Tooltip(s): 'tooltip="$s"';
+			case Truecolor(b): 'truecolor=$b';
+			case Vertices(pl): 'vertices=${pl.map(printPoint).join(" ")}';
+			case Viewport(s): 'viewport="$s"';
+			case VoroMargin(f): 'voro_margin=$f';
+			case Weight(f): 'weight=$f';
+			case Width(f): 'width=$f';
+			case XDotVersion(s): 'xdotversion="$s"';
+			case XLabel(s): 'xlabel="$s"';
+			case XLp(p): 'xlp=${printPoint(p)}';
+			case Z(f): 'z=$f';
 		};
 	}
 
@@ -28,14 +187,58 @@ class Printer {
 		}
 	}
 
-	static public function printSpline(spline:Spline) {
-		return switch (spline) {
+	static public function printAddDouble(ad:AddDouble) {
+		return '${(ad.add ? "+" : "")}${ad.f}';
+	}
+
+	static public function printAddPoint(ad:AddPoint) {
+		return '${(ad.add ? "+" : "")}${printPoint(ad.point)}';
+	}
+
+	static public function printArrowType(at:ArrowType) {
+		return switch (at) {
+			case Normal: "normal";
+			case Dot: "dot";
+			case ODot: "odot";
 			case None: "none";
-			case Line: "line";
-			case Polyline: "polyline";
-			case Curved: "curved";
-			case Ortho: "ortho";
-			case Spline: "spline";
+			case Empty: "empty";
+			case Diamond: "diamond";
+			case EDiamond: "ediamond";
+			case Box: "box";
+			case Open: "open";
+			case Vee: "vee";
+			case Inv: "inv";
+			case InvDot: "invdot";
+			case InvODot: "invodot";
+			case Tee: "tee";
+			case InvEmpty: "invempty";
+			case ODiamond: "odiamond";
+			case Crow: "crow";
+			case OBox: "obox";
+			case HalfOpen: "halfopen";
+			case Circle: "circle";
+		}
+	}
+
+	static public function printBoolOrInt(boi:BoolOrInt) {
+		return switch (boi) {
+			case Bool(b): '$b';
+			case Int(i): '$i';
+		}
+	}
+
+	static public function printBoolOrQuadType(boq:BoolOrQuadType) {
+		return switch (boq) {
+			case Bool(b): '$b';
+			case QuadType(qt): printQuadType(qt);
+		}
+	}
+
+	static public function printClusterMode(cm:ClusterMode) {
+		return switch (cm) {
+			case Local: "local";
+			case Global: "global";
+			case None: "none";
 		}
 	}
 
@@ -699,13 +902,136 @@ class Printer {
 		}
 	}
 
-	static public function printRankdir(rd:RankDir) {
+	static public function printCompassPoint(cp:CompassPoint) {
+		return switch (cp) {
+			case N: "n";
+			case NE: "ne";
+			case E: "e";
+			case SE: "se";
+			case S: "s";
+			case SW: "sw";
+			case W: "w";
+			case NW: "nw";
+			case C: "c";
+			case _: "_";
+		}
+	}
+
+	static public function printDirType(dt:DirType) {
+		return switch (dt) {
+			case Forward: "forward";
+			case Back: "back";
+			case Both: "both";
+			case None: "none";
+		}
+	}
+
+	static public function printDoubleList(dl:Array<Float>) {
+		return dl.join(":");
+	}
+
+	static public function printDoubleOrPoint(dop:DoubleOrPoint) {
+		return switch (dop) {
+			case Double(f): '$f';
+			case Point(p): printPoint(p);
+		}
+	}
+
+	static public function printDoubleOrString(dos:DoubleOrString) {
+		return switch (dos) {
+			case Double(f): '$f';
+			case String(s): '"$s"';
+		}
+	}
+
+	static public function printImageScale(ims:ImageScale) {
+		return switch (ims) {
+			case False: "false";
+			case True: "true";
+			case Width: "width";
+			case Height: "height";
+			case Both: "both";
+		}
+	}
+
+	static public function printOutputMode(om:OutputMode) {
+		return switch (om) {
+			case BreadthFirst: "breadthfirst";
+			case NodesFirst: "nodesfirst";
+			case EdgesFirst: "edgesfirst";
+		}
+	}
+
+	static public function printPackMode(pm:PackMode) {
+		return switch (pm) {
+			case Node: "node";
+			case Clust: "clust";
+			case Graph: "graph";
+			case Array(flags, n): 'array${(flags != "" ? '_$flags' : "")}${(n != null ? '$n' : "")}}';
+		}
+	}
+
+	static public function printPageDir(pdir:PageDir) {
+		return switch (pdir) {
+			case BL: "BL";
+			case BR: "BR";
+			case TL: "TL";
+			case TR: "TR";
+			case RB: "RB";
+			case RT: "RT";
+			case LB: "LB";
+			case LT: "LT";
+		}
+	}
+
+	static public function printPoint(point:Point) {
+		return '"${point.x},${point.y}${(point.z != null ? ',${point.z}' : "")}${(point.dontChange ? "!" : "")}"';
+	}
+
+	static public function printPointOrSplineType(post:PointOrSplineType) {
+		return switch (post) {
+			case Point(p): printPoint(p);
+			case SplineType(s): '"$s"';
+		}
+	}
+
+	static public function printPortPos(pp:PortPos) {
+		return switch (pp) {
+			case CompassPoint(cp): printCompassPoint(cp);
+			case PortName(s): s;
+			case Both(s, cp): '$s:${printCompassPoint(cp)}';
+		}
+	}
+
+	static function printQuadType(qt:QuadType) {
+		return switch (qt) {
+			case Normal: "normal";
+			case Fast: "fast";
+			case None: "none";
+		}
+	}
+
+	static public function printRankDir(rd:RankDir) {
 		return switch rd {
 			case Tb: "TB";
 			case Lr: "LR";
 			case Bt: "BT";
 			case Rl: "RL";
 		}
+	}
+
+	static public function printRankType(rt:RankType) {
+		return switch (rt) {
+			case Same: "same";
+			case Min: "min";
+			case Source: "source";
+			case Max: "max";
+			case Sink: "sink";
+		}
+	}
+
+	static public function printRectangle(rect:Rectangle) {
+		return '${rect.llx},${rect.lly},${rect.urx},${rect.ury}';
 	}
 
 	static public function printShape(sh:Shape) {
@@ -767,6 +1093,29 @@ class Printer {
 			case Rarrow: "rarrow";
 			case Larrow: "larrow";
 			case Lpromoter: "lpromoter";
+		}
+	}
+
+	static public function printSmoothType(st:SmoothType) {
+		return switch (st) {
+			case None: "none";
+			case AvgDist: "avg_dist";
+			case GraphDist: "graph_dist";
+			case PowerDist: "power_dist";
+			case Rng: "rng";
+			case Spring: "spring";
+			case Triangle: "triangle";
+		}
+	}
+
+	static public function printSpline(spline:Spline) {
+		return switch (spline) {
+			case None: "none";
+			case Line: "line";
+			case Polyline: "polyline";
+			case Curved: "curved";
+			case Ortho: "ortho";
+			case Spline: "spline";
 		}
 	}
 

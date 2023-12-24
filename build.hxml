@@ -1,6 +1,6 @@
--cp src
-
 --cwd examples
+
+-cp ../src
 
 --main Factorio
 --interp
