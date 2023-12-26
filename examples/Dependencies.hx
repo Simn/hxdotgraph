@@ -42,7 +42,7 @@ function main() {
 		for (to in node.to) {
 			var toNode = nodeLut[to];
 			if (toNode != null) {
-				graph.edge(node.node, toNode.node, [Color([Gray])]);
+				graph.edge(node.node, toNode.node, [Color(Gray)]);
 			}
 		}
 	}

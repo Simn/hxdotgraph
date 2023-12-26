@@ -49,7 +49,7 @@ function main() {
 
 	function subgraph(inputs:Array<Resource>, outputs:Array<Resource>, ?name:String) {
 		name ??= outputs.map(r -> r.toString()).join(" & ");
-		var cluster = graph.subgraph([Label(name), Style(Filled), Color([Lightblue])]);
+		var cluster = graph.subgraph([Label(name), Style(Filled), Color(Lightblue)]);
 		for (input in inputs) {
 			cluster.node([Label(input.toString()), Shape(Box)]);
 		}

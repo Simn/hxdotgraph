@@ -1,0 +1,3 @@
+[submodule "gen/graphviz.gitlab.io"]
+	path = gen/graphviz.gitlab.io
+	url = https://gitlab.com/graphviz/graphviz.gitlab.io

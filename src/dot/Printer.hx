@@ -5,168 +5,197 @@ import dot.Attribute;
 class Printer {
 	static public function printAttribute<T>(attribute:Attribute<T>) {
 		return switch (attribute) {
+			case _background(s): '_background="$s"';
 			case Area(f): 'area=$f';
-			case ArrowHead(at): 'arrowhead=${printArrowType(at)}';
-			case ArrowSize(f): 'arrowsize=$f';
-			case ArrowTail(at): 'arrowtail=${printArrowType(at)}';
-			case BB(rect): 'bb="${printRectangle(rect)}"';
-			case BGColor(c): 'bgcolor=${printColor(c)}';
+			case Arrowhead(at): 'arrowhead=${printArrowType(at)}';
+			case Arrowsize(f): 'arrowsize=$f';
+			case Arrowtail(at): 'arrowtail=${printArrowType(at)}';
+			case Bb(rect): 'bb="${printRectangle(rect)}"';
+			case Beautify(b): 'beautify=$b';
+			case Bgcolor(c): 'bgcolor=${printColor(c)}';
 			case Center(b): 'center=$b';
 			case Charset(s): 'charset="$s"';
-			case ClusterRank(cm): 'clusterrank=${printClusterMode(cm)}';
-			case Color(cl): 'color=${cl.map(printColor).join(":")}';
-			case ColorScheme(s): 'colorscheme="$s"';
+			case Class(s): 'class="$s"';
+			case Cluster(b): 'cluster=$b';
+			case Clusterrank(cm): 'clusterrank=${printClusterMode(cm)}';
+			case Color(null, cl): 'color=${cl.map(printColor).join(":")}';
+			case Color(c, _): 'color=${printColor(c)}';
+			case Colorscheme(s): 'colorscheme="$s"';
 			case Comment(s): 'comment="$s"';
 			case Compound(b): 'compound=$b';
 			case Concentrate(b): 'concentrate=$b';
 			case Constraint(b): 'constraint=$b';
+			case Damping(f): 'damping=$f';
 			case Decorate(b): 'decorate=$b';
-			case DefaultDist(f): 'defaultdist=$f';
+			case Defaultdist(f): 'defaultdist=$f';
 			case Dim(i): 'dim=$i';
 			case Dimen(i): 'dimen=$i';
 			case Dir(dt): 'dir=${printDirType(dt)}';
-			case DirEdgeConstraints(s): 'diredgeconstraints=${printBoolString(s)}';
+			case Diredgeconstraints(s): 'diredgeconstraints=${printBoolString(s)}';
 			case Distortion(f): 'distortion=$f';
-			case DPI(f): 'dpi=$f';
-			case EdgeUrl(s): 'edgeurl="$s"';
-			case EdgeHref(s): 'edgehref="$s';
-			case EdgeTarget(s): 'edgetarget="$s"';
-			case EdgeTooltip(s): 'edgetooltip="$s"';
+			case Dpi(f): 'dpi=$f';
+			case EdgeURL(s): 'edgeurl="$s"';
+			case Edgehref(s): 'edgehref="$s';
+			case Edgetarget(s): 'edgetarget="$s"';
+			case Edgetooltip(s): 'edgetooltip="$s"';
 			case Epsilon(f): 'epsilon=$f';
-			case ESep(dop, add): 'esep=${add ? "+" : ""}${printDoubleOrPoint(dop)}';
-			case FillColor(c): 'fillcolor=${printColor(c)}';
-			case FixedSize(b): 'fixedsize=$b';
-			case FontColor(c): 'fontcolor=${printColor(c)}';
-			case FontName(s): 'fontname="$s"';
-			case FontNames(s): 'fontnames="$s"';
-			case FontPath(s): 'fontpath="$s';
-			case FontSize(f): 'fontsize=$f';
-			case ForceLabels(b): 'forcelabels=$b';
-			case GradientAngle(i): 'gradientangle=$i';
+			case Esep(null, ap): 'esep=${printAddPoint(ap)}';
+			case Esep(ad, _): 'esep=${printAddDouble(ad)}';
+			case Fillcolor(c): 'fillcolor=${printColor(c)}';
+			case Fixedsize(b): 'fixedsize=$b';
+			case Fontcolor(c): 'fontcolor=${printColor(c)}';
+			case Fontname(s): 'fontname="$s"';
+			case Fontnames(s): 'fontnames="$s"';
+			case Fontpath(s): 'fontpath="$s';
+			case Fontsize(f): 'fontsize=$f';
+			case Forcelabels(b): 'forcelabels=$b';
+			case Gradientangle(i): 'gradientangle=$i';
 			case Group(s): 'group="$s"';
-			case HeadUrl(s): 'headurl="$s"';
-			case HeadLp(p): 'head_lp=${printPoint(p)}';
-			case HeadClip(b): 'headclip=$b';
-			case HeadHref(s): 'headhref="$s"';
-			case HeadLabel(s): 'headlabel="$s"';
-			case HeadPort(pp): 'headport=${printPortPos(pp)}';
-			case HeadTarget(s): 'headtarget="$s"';
-			case HeadTooltip(s): 'headtooltip="$s"';
+			case HeadURL(s): 'headurl="$s"';
+			case Head_lp(p): 'head_lp=${printPoint(p)}';
+			case Headclip(b): 'headclip=$b';
+			case Headhref(s): 'headhref="$s"';
+			case Headlabel(s): 'headlabel="$s"';
+			case Headport(pp): 'headport=${printPortPos(pp)}';
+			case Headtarget(s): 'headtarget="$s"';
+			case Headtooltip(s): 'headtooltip="$s"';
 			case Height(f): 'height=$f';
 			case Href(s): 'href="$s"';
 			case Id(s): 'id="$s"';
 			case Image(s): 'image="$s"';
-			case ImagePath(s): 'imagepath="$s"';
-			case ImageScale(ims): 'imagescale=${printImageScale(ims)}';
-			case InputScale(f): 'inputscale=$f';
+			case Imagepath(s): 'imagepath="$s"';
+			case Imagepos(s): 'imagepos="$s"';
+			case Imagescale(null, b): 'imagescale=$b';
+			case Imagescale(ims, _): 'imagescale=${printImageScale(ims)}';
+			case Inputscale(f): 'inputscale=$f';
+			case K(f): 'K=$f';
 			case Label(s): 'label="$s"';
-			case LabelUrl(s): 'labelurl="$s"';
-			case LabelScheme(i): 'labelscheme=$i';
-			case LabelAngle(f): 'labelangle=$f';
-			case LabelDistance(f): 'labeldistance=$f';
-			case LabelFloat(b): 'labelfloat=$b';
-			case LabelFontColor(c): 'labelfontcolor=${printColor(c)}';
-			case LabelFontName(s): 'labelfontname="$s"';
-			case LabelFontSize(f): 'labelfontsize=$f';
-			case LabelHref(s): 'labelhref="$s"';
-			case LabelJust(s): 'labeljust="$s"';
-			case LabelLoc(s): 'labelloc="$s"';
-			case LabelTarget(s): 'labeltarget="$s"';
-			case LabelTooltip(s): 'labeltooltip="$s"';
+			case LabelURL(s): 'labelurl="$s"';
+			case Label_scheme(i): 'labelscheme=$i';
+			case Labelangle(f): 'labelangle=$f';
+			case Labeldistance(f): 'labeldistance=$f';
+			case Labelfloat(b): 'labelfloat=$b';
+			case Labelfontcolor(c): 'labelfontcolor=${printColor(c)}';
+			case Labelfontname(s): 'labelfontname="$s"';
+			case Labelfontsize(f): 'labelfontsize=$f';
+			case Labelhref(s): 'labelhref="$s"';
+			case Labeljust(s): 'labeljust="$s"';
+			case Labelloc(s): 'labelloc="$s"';
+			case Labeltarget(s): 'labeltarget="$s"';
+			case Labeltooltip(s): 'labeltooltip="$s"';
 			case Landscape(b): 'landscape=$b';
 			case Layer(s): 'layer="$s"';
-			case LayerListSep(s): 'layerlistsep="$s"';
+			case Layerlistsep(s): 'layerlistsep="$s"';
 			case Layers(s): 'layers="$s"';
-			case LayerSelect(s): 'layerselect="$s"';
-			case LayerSep(s): 'layersep="$s"';
+			case Layerselect(s): 'layerselect="$s"';
+			case Layersep(s): 'layersep="$s"';
 			case Layout(s): 'layout="$s"';
 			case Len(f): 'len=$f';
 			case Levels(i): 'levels=$i';
-			case LevelsGap(f): 'levelsgap=$f';
-			case LHead(s): 'lhead="$s"';
-			case LHeight(f): 'lheight=$f';
+			case Levelsgap(f): 'levelsgap=$f';
+			case Lhead(s): 'lhead="$s"';
+			case Lheight(f): 'lheight=$f';
+			case Linelength(i): 'linelength=$i';
 			case Lp(p): 'lp=${printPoint(p)}';
-			case LTail(s): 'ltail="$s"';
-			case LWidth(f): 'lwidth=$f';
-			case Margin(dop): 'margin=${printDoubleOrPoint(dop)}';
-			case MaxIter(i): 'maxiter=$i';
-			case McLimit(f): 'mclimit=$f';
-			case MinDist(f): 'mindist=$f';
-			case MinLen(i): 'minlen=$i';
+			case Ltail(s): 'ltail="$s"';
+			case Lwidth(f): 'lwidth=$f';
+			case Margin(null, p): 'margin=${printPoint(p)}';
+			case Margin(f, _): 'margin=$f';
+			case Maxiter(i): 'maxiter=$i';
+			case Mclimit(f): 'mclimit=$f';
+			case Mindist(f): 'mindist=$f';
+			case Minlen(i): 'minlen=$i';
 			case Mode(s): 'mode="$s"';
 			case Model(s): 'model="$s"';
 			case Newrank(b): 'newrank=$b';
-			case NodeSep(f): 'nodesep=$f';
-			case NoJustify(b): 'nojustify=$b';
+			case Nodesep(f): 'nodesep=$f';
+			case Nojustify(b): 'nojustify=$b';
 			case Normalize(f): 'normalize=$f';
-			case NsLimit(f): 'nslimit=$f';
+			case Notranslate(b): 'notranslate=$b';
+			case Nslimit(f): 'nslimit=$f';
+			case Nslimit1(f): 'nslimit=$f';
+			case Oneblock(v): 'oneblock=$v';
 			case Ordering(s): 'ordering="$s"';
-			case Orientation(dos): 'orientation=${printDoubleOrString(dos)}';
-			case OutputOrder(om): 'outputorder=${printOutputMode(om)}';
+			case Orientation(null, s): 'orientation="$s"';
+			case Orientation(f, _): 'orientation=$f';
+			case Outputorder(om): 'outputorder=${printOutputMode(om)}';
 			case Overlap(s): 'overlap=${printBoolString(s)}';
-			case OverlapScaling(f): 'overlapscaling=$f';
-			case OverlapShrink(b): 'overlapshrink=$b';
-			case Pack(boi): 'pack=${printBoolOrInt(boi)}';
+			case Overlap_scaling(f): 'overlapscaling=$f';
+			case Overlap_shrink(b): 'overlapshrink=$b';
+			case Pack(null, i): 'pack=$i';
+			case Pack(b, _): 'pack=$b';
 			case Packmode(pm): 'packmode=${printPackMode(pm)}';
-			case Pad(dop): 'pad=${printDoubleOrPoint(dop)}';
-			case Page(dop): 'page=${printDoubleOrPoint(dop)}';
-			case PageDir(pdir): 'pagedir=${printPageDir(pdir)}';
-			case PenColor(c): 'pencolor=${printColor(c)}';
-			case PenWidth(f): 'penwidth=$f';
+			case Page(null, p): 'page=${printPoint(p)}';
+			case Page(f, _): 'page=$f';
+			case Pad(null, p): 'pad=${printPoint(p)}';
+			case Pad(f, _): 'pad=$f';
+			case Pagedir(pdir): 'pagedir=${printPageDir(pdir)}';
+			case Pencolor(c): 'pencolor=${printColor(c)}';
+			case Penwidth(f): 'penwidth=$f';
 			case Peripheries(i): 'peripheries=$i';
 			case Pin(b): 'pin=$b';
-			case Pos(post): 'pos=${printPointOrSplineType(post)}';
-			case Quadtree(boq): 'quadtree=${printBoolOrQuadType(boq)}';
+			case Pos(null, s): 'pos="$s"';
+			case Pos(p, _): 'pos=${printPoint(p)}';
+			case Quadtree(null, b): 'quadtree=$b';
+			case Quadtree(qt, _): 'quadtree=${printQuadType(qt)}';
 			case Quantum(f): 'quantum=$f';
 			case Rank(rt): 'rank=${printRankType(rt)}';
-			case RankDir(rd): 'rankdir="${printRankDir(rd)}"';
-			case RankSep(fl): 'ranksep=${printDoubleList(fl)}';
-			case Ratio(dos): 'ratio=${printDoubleOrString(dos)}';
+			case Rankdir(rd): 'rankdir="${printRankDir(rd)}"';
+			case Ranksep(null, af): 'ranksep=${printDoubleList(af)}';
+			case Ranksep(f, _): 'ranksep=$f';
+			case Ratio(null, s): 'ratio="$s"';
+			case Ratio(f, _): 'ratio=$f';
 			case Rects(rect): 'rects=${printRectangle(rect)}';
 			case Regular(b): 'regular=$b';
 			case Remincross(b): 'remincross=$b';
-			case RepulsiveForce(f): 'repulsiveforce=$f';
+			case Repulsiveforce(f): 'repulsiveforce=$f';
 			case Resolution(f): 'resolution=$f';
 			case Root(s): 'root=${printBoolString(s)}';
 			case Rotate(i): 'rotate=$i';
 			case Rotation(f): 'rotation=$f';
-			case SameHead(s): 'samehead="$s"';
-			case SameTail(s): 'sametail="$s"';
-			case SamplePoint(o): 'samplepoint=$o';
-			case Scale(dop): 'scale=${printDoubleOrPoint(dop)}';
-			case SearchSize(i): 'searchsize=$i';
-			case Sep(dop, add): 'sep=${add ? "+" : ""}${printDoubleOrPoint(dop)}';
+			case Samehead(s): 'samehead="$s"';
+			case Sametail(s): 'sametail="$s"';
+			case Samplepoints(o): 'samplepoints=$o';
+			case Scale(null, p): 'scale=${printPoint(p)}';
+			case Scale(f, _): 'scale=$f';
+			case Searchsize(i): 'searchsize=$i';
+			case Sep(null, ap): 'sep=${printAddPoint(ap)}';
+			case Sep(ad, _): 'sep=${printAddDouble(ad)}';
 			case Shape(sh): 'shape=${printShape(sh)}';
 			case Shapefile(s): 'shapefile="$s"';
 			case Showboxes(i): 'showboxes=$i';
 			case Sides(i): 'sides=$i';
-			case Size(dop): 'size=${printDoubleOrPoint(dop)}';
+			case Size(null, p): 'size=${printPoint(p)}';
+			case Size(f, _): 'size=$f';
 			case Skew(f): 'skew=$f';
 			case Smoothing(st): 'smoothing=${printSmoothType(st)}';
 			case Sortv(i): 'sortv=$i';
-			case Splines(var spline): 'splines=${printSpline(spline)}';
+			case Splines(null, b): 'splines=$b';
+			case Splines(var spline, _): 'splines=${printSpline(spline)}';
 			case Start(s): 'start="$s"';
 			case Style(st): 'style=${printStyle(st)}';
 			case Stylesheet(s): 'stylesheet="$s"';
-			case TailUrl(s): 'tailurl="$s"';
-			case TailLp(p): 'tail_lp=${printPoint(p)}';
-			case TailClip(b): 'tailclip=$b';
-			case TailHref(s): 'tailhref="$s"';
-			case TailLabel(s): 'taillabel="$s"';
-			case TailPort(pp): 'tailport=${printPortPos(pp)}';
-			case TailTarget(s): 'tailtarget="$s"';
-			case TailTooltip(s): 'tailtooltip="$s"';
+			case TailURL(s): 'tailurl="$s"';
+			case Tail_lp(p): 'tail_lp=${printPoint(p)}';
+			case Tailclip(b): 'tailclip=$b';
+			case Tailhref(s): 'tailhref="$s"';
+			case Taillabel(s): 'taillabel="$s"';
+			case Tailport(pp): 'tailport=${printPortPos(pp)}';
+			case Tailtarget(s): 'tailtarget="$s"';
+			case Tailtooltip(s): 'tailtooltip="$s"';
 			case Target(s): 'target="$s"';
+			case TBbalance(s): 'target="$s"';
 			case Tooltip(s): 'tooltip="$s"';
 			case Truecolor(b): 'truecolor=$b';
+			case URL(s): 'URL="$s"';
 			case Vertices(pl): 'vertices=${pl.map(printPoint).join(" ")}';
 			case Viewport(s): 'viewport="$s"';
-			case VoroMargin(f): 'voro_margin=$f';
+			case Voro_margin(f): 'voro_margin=$f';
 			case Weight(f): 'weight=$f';
 			case Width(f): 'width=$f';
-			case XDotVersion(s): 'xdotversion="$s"';
-			case XLabel(s): 'xlabel="$s"';
-			case XLp(p): 'xlp=${printPoint(p)}';
+			case Xdotversion(s): 'xdotversion="$s"';
+			case Xlabel(s): 'xlabel="$s"';
+			case Xlp(p): 'xlp=${printPoint(p)}';
 			case Z(f): 'z=$f';
 		};
 	}
@@ -209,20 +238,6 @@ class Printer {
 			case OBox: "obox";
 			case HalfOpen: "halfopen";
 			case Circle: "circle";
-		}
-	}
-
-	static public function printBoolOrInt(boi:BoolOrInt) {
-		return switch (boi) {
-			case Bool(b): '$b';
-			case Int(i): '$i';
-		}
-	}
-
-	static public function printBoolOrQuadType(boq:BoolOrQuadType) {
-		return switch (boq) {
-			case Bool(b): '$b';
-			case QuadType(qt): printQuadType(qt);
 		}
 	}
 
@@ -930,24 +945,8 @@ class Printer {
 		return dl.join(":");
 	}
 
-	static public function printDoubleOrPoint(dop:DoubleOrPoint) {
-		return switch (dop) {
-			case Double(f): '$f';
-			case Point(p): printPoint(p);
-		}
-	}
-
-	static public function printDoubleOrString(dos:DoubleOrString) {
-		return switch (dos) {
-			case Double(f): '$f';
-			case String(s): '"$s"';
-		}
-	}
-
 	static public function printImageScale(ims:ImageScale) {
 		return switch (ims) {
-			case False: "false";
-			case True: "true";
 			case Width: "width";
 			case Height: "height";
 			case Both: "both";
@@ -986,13 +985,6 @@ class Printer {
 
 	static public function printPoint(point:Point) {
 		return '"${point.x},${point.y}${(point.z != null ? ',${point.z}' : "")}${(point.dontChange ? "!" : "")}"';
-	}
-
-	static public function printPointOrSplineType(post:PointOrSplineType) {
-		return switch (post) {
-			case Point(p): printPoint(p);
-			case SplineType(s): '"$s"';
-		}
 	}
 
 	static public function printPortPos(pp:PortPos) {
