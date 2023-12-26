@@ -58,7 +58,7 @@ enum Attribute<T> {
 
 		@see https://graphviz.org/docs/attrs/bb/
 	**/
-	Bb(v:Rectangle):A1<G>;
+	Bb(v:Rect):A1<G>;
 
 	/**
 		Whether to draw leaf nodes uniformly in a circle around the root node in sfdp.
@@ -919,7 +919,7 @@ enum Attribute<T> {
 
 		@see https://graphviz.org/docs/attrs/rects/
 	**/
-	Rects(v:Rectangle):A1<N>;
+	Rects(v:Rect):A1<N>;
 
 	/**
 		If true, force polygon to be regular.
@@ -1376,7 +1376,7 @@ enum RankType {
 	Sink;
 }
 
-typedef Rectangle = {
+typedef Rect = {
 	llx:Float,
 	lly:Float,
 	urx:Float,

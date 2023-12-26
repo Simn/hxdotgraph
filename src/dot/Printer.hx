@@ -10,7 +10,7 @@ class Printer {
 			case Arrowhead(at): 'arrowhead=${printArrowType(at)}';
 			case Arrowsize(f): 'arrowsize=$f';
 			case Arrowtail(at): 'arrowtail=${printArrowType(at)}';
-			case Bb(rect): 'bb="${printRectangle(rect)}"';
+			case Bb(rect): 'bb="${printRect(rect)}"';
 			case Beautify(b): 'beautify=$b';
 			case Bgcolor(c): 'bgcolor=${printColor(c)}';
 			case Center(b): 'center=$b';
@@ -31,7 +31,8 @@ class Printer {
 			case Dim(i): 'dim=$i';
 			case Dimen(i): 'dimen=$i';
 			case Dir(dt): 'dir=${printDirType(dt)}';
-			case Diredgeconstraints(s): 'diredgeconstraints=${printBoolString(s)}';
+			case Diredgeconstraints(null, b): 'diredgeconstraints=$b';
+			case Diredgeconstraints(s, _): 'diredgeconstraints="$s"';
 			case Distortion(f): 'distortion=$f';
 			case Dpi(f): 'dpi=$f';
 			case EdgeURL(s): 'edgeurl="$s"';
@@ -119,7 +120,8 @@ class Printer {
 			case Orientation(null, s): 'orientation="$s"';
 			case Orientation(f, _): 'orientation=$f';
 			case Outputorder(om): 'outputorder=${printOutputMode(om)}';
-			case Overlap(s): 'overlap=${printBoolString(s)}';
+			case Overlap(null, b): 'overlap=$b';
+			case Overlap(s, _): 'overlap="$s"';
 			case Overlap_scaling(f): 'overlapscaling=$f';
 			case Overlap_shrink(b): 'overlapshrink=$b';
 			case Pack(null, i): 'pack=$i';
@@ -141,16 +143,17 @@ class Printer {
 			case Quantum(f): 'quantum=$f';
 			case Rank(rt): 'rank=${printRankType(rt)}';
 			case Rankdir(rd): 'rankdir="${printRankDir(rd)}"';
-			case Ranksep(null, af): 'ranksep=${printDoubleList(af)}';
+			case Ranksep(null, af): 'ranksep=${af.join(":")}';
 			case Ranksep(f, _): 'ranksep=$f';
 			case Ratio(null, s): 'ratio="$s"';
 			case Ratio(f, _): 'ratio=$f';
-			case Rects(rect): 'rects=${printRectangle(rect)}';
+			case Rects(rect): 'rects=${printRect(rect)}';
 			case Regular(b): 'regular=$b';
 			case Remincross(b): 'remincross=$b';
 			case Repulsiveforce(f): 'repulsiveforce=$f';
 			case Resolution(f): 'resolution=$f';
-			case Root(s): 'root=${printBoolString(s)}';
+			case Root(null, b): 'root=$b';
+			case Root(s, _): 'root="$s"';
 			case Rotate(i): 'rotate=$i';
 			case Rotation(f): 'rotation=$f';
 			case Samehead(s): 'samehead="$s"';
@@ -238,14 +241,6 @@ class Printer {
 			case OBox: "obox";
 			case HalfOpen: "halfopen";
 			case Circle: "circle";
-		}
-	}
-
-	static function printBoolString(s:String) {
-		return switch (s) {
-			case "true": 'true';
-			case "false": 'false';
-			case _: '"$s"';
 		}
 	}
 
@@ -941,10 +936,6 @@ class Printer {
 		}
 	}
 
-	static public function printDoubleList(dl:Array<Float>) {
-		return dl.join(":");
-	}
-
 	static public function printImageScale(ims:ImageScale) {
 		return switch (ims) {
 			case Width: "width";
@@ -1022,7 +1013,7 @@ class Printer {
 		}
 	}
 
-	static public function printRectangle(rect:Rectangle) {
+	static public function printRect(rect:Rect) {
 		return '${rect.llx},${rect.lly},${rect.urx},${rect.ury}';
 	}
 

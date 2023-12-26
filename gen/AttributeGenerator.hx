@@ -75,7 +75,7 @@ class AttributeGenerator {
 				case "rankType":
 					macro :RankType;
 				case "rect":
-					macro :Rectangle;
+					macro :Rect;
 				case "shape":
 					macro :Shape;
 				case "smoothType":
