@@ -13,24 +13,24 @@ abstract class NodeHost {
 		this.prefix = prefix;
 	}
 
-	public function global(attrs:Array<Attribute<NodeAttribute>>) {
-		nodes.push(new Node(this, "node", attrs));
+	public function global(attributes:Array<Attribute<NodeAttribute>>) {
+		nodes.push(new Node(this, "node", attributes));
 	}
 
-	public function node(attrs:Array<Attribute<NodeAttribute>>) {
-		var node = new Node(this, prefix + "_" + nodes.length, attrs);
+	public function node(attributes:Array<Attribute<NodeAttribute>>) {
+		var node = new Node(this, prefix + "_" + nodes.length, attributes);
 		nodes.push(node);
 		return node;
 	}
 
-	public function edge(from:Node, to:Node, attrs:Array<Attribute<EdgeAttribute>> = null) {
-		var edge = new Edge(this, from, to, attrs ?? []);
+	public function edge(from:Node, to:Node, ?attributes:Array<Attribute<EdgeAttribute>>) {
+		var edge = new Edge(this, from, to, attributes ?? []);
 		edges.push(edge);
 		return edge;
 	}
 
-	public function subgraph(attrs:Array<Attribute<ClusterAttribute>>) {
-		var subgraph = new Subgraph(this, "cluster_" + subgraphs.length, attrs);
+	public function subgraph(?attributes:Array<Attribute<ClusterAttribute>>) {
+		var subgraph = new Subgraph(this, "cluster_" + subgraphs.length, attributes);
 		subgraphs.push(subgraph);
 		return subgraph;
 	}

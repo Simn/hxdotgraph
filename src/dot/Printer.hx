@@ -3,16 +3,8 @@ package dot;
 import dot.Attribute;
 
 class Printer {
-	static function printBoolString(s:String) {
-		return switch (s) {
-			case "true": 'true';
-			case "false": 'false';
-			case _: '"$s"';
-		}
-	}
-
-	static public function printAttribute<T>(attr:Attribute<T>) {
-		return switch (attr) {
+	static public function printAttribute<T>(attribute:Attribute<T>) {
+		return switch (attribute) {
 			case Area(f): 'area=$f';
 			case ArrowHead(at): 'arrowhead=${printArrowType(at)}';
 			case ArrowSize(f): 'arrowsize=$f';
@@ -179,9 +171,9 @@ class Printer {
 		};
 	}
 
-	static public function printAttributes<T>(attrs:Array<Attribute<T>>) {
-		if (attrs.length > 0) {
-			return "[" + attrs.map(printAttribute).join(", ") + "]";
+	static public function printAttributes<T>(attributes:Array<Attribute<T>>) {
+		if (attributes.length > 0) {
+			return "[" + attributes.map(printAttribute).join(", ") + "]";
 		} else {
 			return "";
 		}
@@ -231,6 +223,14 @@ class Printer {
 		return switch (boq) {
 			case Bool(b): '$b';
 			case QuadType(qt): printQuadType(qt);
+		}
+	}
+
+	static function printBoolString(s:String) {
+		return switch (s) {
+			case "true": 'true';
+			case "false": 'false';
+			case _: '"$s"';
 		}
 	}
 

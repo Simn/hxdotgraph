@@ -139,8 +139,8 @@ function main() {
 	graph.iterateNodes(node -> {
 		var label = null;
 		var shape = null;
-		for (attr in node.attrs) {
-			switch (attr) {
+		for (attribute in node.attributes) {
+			switch (attribute) {
 				case Label(s):
 					label = s;
 				case Shape(sh):
