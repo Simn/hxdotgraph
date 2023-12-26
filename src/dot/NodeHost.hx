@@ -44,6 +44,15 @@ abstract class NodeHost {
 		}
 	}
 
+	public function iterateEdges(f:Edge->Void) {
+		for (edge in edges) {
+			f(edge);
+		}
+		for (subgraph in subgraphs) {
+			subgraph.iterateEdges(f);
+		}
+	}
+
 	function getInternalDotCode(buffer:StringBuf, indentation:String, isDigraph:Bool) {
 		for (subgraph in subgraphs) {
 			buffer.add(subgraph.getDotCode(indentation, isDigraph));

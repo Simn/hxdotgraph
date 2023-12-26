@@ -15,3 +15,9 @@
 --next
 --main Dependencies
 --interp
+
+--next
+#-D HAXE_BUILD_PATH=c:/git/haxe/
+-D DEP_ROOTS=Genhl
+-main HaxeDependencies
+--interp

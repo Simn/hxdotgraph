@@ -3,3 +3,4 @@ examples/factorio.dot
 examples/ast.dot
 examples/dump
 examples/dependencies.dot
+examples/haxeDependencies.dot
