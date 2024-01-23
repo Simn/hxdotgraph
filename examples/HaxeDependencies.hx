@@ -19,17 +19,139 @@ function capitalize(s:String) {
 	return s.substr(0, 1).toUpperCase() + s.substr(1);
 }
 
+typedef IdomInfo = {
+	var node:Node;
+	var parent:IdomInfo;
+	var idom:IdomInfo;
+	var semi:Int;
+	var label:IdomInfo;
+	var ancestor:IdomInfo;
+	var bucket:Array<IdomInfo>;
+}
+
+function inferIdom(graph:Graph, root:Node) {
+	var infoLut = new Map();
+	var infos = [];
+	function addInfo(node:Node, nodeParent:Node) {
+		var info:IdomInfo = {
+			node: node,
+			parent: null,
+			idom: null,
+			semi: infos.length,
+			label: null,
+			ancestor: null,
+			bucket: []
+		}
+		info.idom = info.label = info.ancestor = info;
+		if (node == nodeParent) {
+			info.parent = info;
+		} else {
+			info.parent = infoLut[nodeParent.name];
+		}
+		infoLut[node.name] = info;
+		infos.push(info);
+	}
+	function loop(node:Node, nodeParent:Node) {
+		addInfo(node, nodeParent);
+		node.iterateOutgoing(edge -> {
+			var nodeTo = edge.to;
+			if (!infoLut.exists(nodeTo.name)) {
+				loop(nodeTo, node);
+			}
+		});
+	}
+	loop(root, root);
+	function compress(info:IdomInfo) {
+		var worklist = [info];
+		{
+			var info = info.ancestor;
+			while (info.ancestor != info) {
+				worklist.push(info);
+				info = info.ancestor;
+			}
+		}
+		var predInfo = worklist.pop();
+		var minSemi = predInfo.label.semi;
+
+		var counter = worklist.length;
+		while (counter-- > 0) {
+			var infoDesc = worklist[counter];
+			var info = infoDesc.label;
+			if (info.semi > minSemi) {
+				infoDesc.label = predInfo.label;
+				predInfo = infoDesc;
+			} else {
+				minSemi = info.semi;
+				predInfo = infoDesc;
+			}
+		}
+	}
+
+	function eval(name:String) {
+		var info = infoLut[name];
+		return if (info.ancestor != info) {
+			compress(info);
+			info.label;
+		} else {
+			info;
+		}
+	}
+
+	var counter = infos.length;
+	while (counter-- > 1) { // skip root
+		var info = infos[counter];
+		var semi = info.semi;
+		info.node.iterateIncoming(edge -> {
+			var semi2 = eval(edge.from.name).semi;
+			if (semi2 < semi) {
+				semi = semi2;
+			}
+		});
+		info.semi = semi;
+		var infoSemi = infos[semi];
+		infoSemi.bucket.push(info);
+		var infoParent = info.parent;
+		info.ancestor = infoParent;
+		for (v in infoParent.bucket) {
+			var u = eval(v.node.name);
+			if (u.semi < v.semi) {
+				v.idom = u;
+			} else {
+				v.idom = infoParent;
+			}
+		}
+		infoParent.bucket = [];
+	}
+	for (i in 1...infos.length) {
+		var info = infos[i];
+		if (info.idom != infos[info.semi]) {
+			info.idom = info.idom.idom;
+		}
+	}
+	// graph.iterateEdges(edge -> edge.remove());
+	for (info in infos) {
+		if (info.idom != info) {
+			var node = info.node;
+			var node2 = info.idom.node;
+			if (node != node2) {
+				node2.iterateOutgoing(edge -> if (edge.to == node) edge.remove());
+				graph.edge(node2, node, [Color(Red)]);
+			}
+		}
+	}
+}
+
 function main() {
-	var graph = new Graph([Splines(Curved)]);
+	var graph = new Graph([Splines(Curved), Overlap("scale")]);
 	var haxeBuildPath = Compiler.getDefine("HAXE_BUILD_PATH");
 	if (haxeBuildPath == null) {
 		return;
 	}
-	var depRoots = Compiler.getDefine("DEP_ROOTS");
-	if (depRoots == null) {
+	var depRoot = Compiler.getDefine("DEP_ROOT");
+	if (depRoot == null) {
 		return;
 	}
-	var depRoots = depRoots.split(",").map(capitalize);
+	depRoot = capitalize(depRoot);
 	var stopNodes = [];
 	var ignoreNodes = ["Globals"];
 	var haxeObjsPath = Path.join([haxeBuildPath, "_build", "default", "src", ".haxe.objs"]);
@@ -51,8 +173,8 @@ function main() {
 		}
 	}
 
-	var edgeAttributes = [Color(Gray)];
-	var workList = depRoots.copy();
+	var edgeAttributes:Array<Attribute<EdgeAttribute>> = [Style(Dotted), Constraint(false)];
+	var workList = [depRoot];
 	while (workList.length > 0) {
 		var currentList = workList;
 		workList = [];
@@ -83,6 +205,10 @@ function main() {
 				}
 			}
 		}
+	}
+
+	if (nodes[depRoot] != null) {
+		inferIdom(graph, nodes[depRoot].node);
 	}
 
 	File.saveContent("haxeDependencies.dot", graph.getDotCode());

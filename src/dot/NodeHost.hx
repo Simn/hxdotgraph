@@ -25,6 +25,8 @@ abstract class NodeHost {
 
 	public function edge(from:Node, to:Node, ?attributes:Array<Attribute<EdgeAttribute>>) {
 		var edge = new Edge(this, from, to, attributes ?? []);
+		from.addOutgoing(edge);
+		to.addIncoming(edge);
 		edges.push(edge);
 		return edge;
 	}
@@ -35,8 +37,14 @@ abstract class NodeHost {
 		return subgraph;
 	}
 
+	public function removeEdge(edge:Edge) {
+		edges.remove(edge);
+		edge.from.removeOutgoing(edge);
+		edge.to.removeIncoming(edge);
+	}
+
 	public function iterateNodes(f:Node->Void) {
-		for (node in nodes) {
+		for (node in nodes.copy()) {
 			f(node);
 		}
 		for (subgraph in subgraphs) {
@@ -45,7 +53,7 @@ abstract class NodeHost {
 	}
 
 	public function iterateEdges(f:Edge->Void) {
-		for (edge in edges) {
+		for (edge in edges.copy()) {
 			f(edge);
 		}
 		for (subgraph in subgraphs) {

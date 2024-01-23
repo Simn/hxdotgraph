@@ -17,6 +17,10 @@ class Edge implements DotPrinter {
 		this.attributes = attributes ?? [];
 	}
 
+	public function remove() {
+		host.removeEdge(this);
+	}
+
 	public function getDotCode(indentation:String, isDigraph:Bool):String {
 		var buffer = new StringBuf();
 		var edgeString = isDigraph ? "->" : "--";

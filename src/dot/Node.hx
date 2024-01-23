@@ -6,6 +6,9 @@ class Node implements DotPrinter {
 	public var name:String;
 	public var attributes:Array<Attribute<NodeAttribute>>;
 
+	var incoming:Array<Edge>;
+	var outgoing:Array<Edge>;
+
 	var host:NodeHost;
 
 	@:allow(dot.Graph, dot.NodeHost)
@@ -13,6 +16,8 @@ class Node implements DotPrinter {
 		this.host = host;
 		this.name = name;
 		this.attributes = attributes ?? [];
+		incoming = [];
+		outgoing = [];
 	}
 
 	public function connect(to:Node, ?attributes:Array<Attribute<EdgeAttribute>>) {
@@ -30,5 +35,37 @@ class Node implements DotPrinter {
 		buffer.add(Printer.printAttributes(attributes));
 		buffer.add(";\n");
 		return buffer.toString();
+	}
+
+	@:allow(dot.NodeHost)
+	function addIncoming(edge:Edge) {
+		incoming.push(edge);
+	}
+
+	@:allow(dot.NodeHost)
+	function addOutgoing(edge:Edge) {
+		outgoing.push(edge);
+	}
+
+	@:allow(dot.NodeHost)
+	function removeIncoming(edge:Edge) {
+		incoming.remove(edge);
+	}
+
+	@:allow(dot.NodeHost)
+	function removeOutgoing(edge:Edge) {
+		outgoing.remove(edge);
+	}
+
+	public function iterateIncoming(f:Edge->Void) {
+		for (edge in incoming.copy()) {
+			f(edge);
+		}
+	}
+
+	public function iterateOutgoing(f:Edge->Void) {
+		for (edge in outgoing.copy()) {
+			f(edge);
+		}
 	}
 }
